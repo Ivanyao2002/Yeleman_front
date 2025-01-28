@@ -1,33 +1,30 @@
-import { Component  } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { LocalStorageServiceService } from './services/local-storage-service.service';
-
+import { AutoCompleteModule } from 'primeng/autocomplete';
+import { LocalStorageServiceService } from './core/services/allOthers/local-storage-service.service';
+import { CommonModule } from '@angular/common';
+import {ToastModule} from 'primeng/toast';
+import {MessageService} from 'primeng/api';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet,],
+  imports: [RouterOutlet, CommonModule, ToastModule],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrl: './app.component.scss',
+  providers: [MessageService],
 })
 export class AppComponent {
-  email = "info@gmail.com"
-  title = 'Yeleman CI';
-  connected :any = " "
-  title2: string=""
-
-
-
-  constructor(private localStorageService: LocalStorageServiceService) {
-    // Utilise le service pour accéder à localStorage
-    const storedTitle = this.localStorageService.getItem('title');
-    this.title = storedTitle ? storedTitle : 'Titre par défaut';
-  }
-
+  title = 'YELEMAN CI';
+  constructor(private localeStore: LocalStorageServiceService){}
+  isConnected = false;
 
   ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
-    const storedTitle = this.localStorageService.getItem('title');
-    this.title = storedTitle ? storedTitle : 'Titre par défaut';
+    if(this.localeStore.getItem("IsConnected") != null){
+      this.isConnected = true;
+    }
+  }
+
+  logout(){
+    this.localeStore.clear()
   }
 }

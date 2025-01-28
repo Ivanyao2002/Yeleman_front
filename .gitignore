@@ -10,11 +10,10 @@
 /node_modules
 npm-debug.log
 yarn-error.log
-packages-lock.json
-
 
 # IDEs and editors
 .idea/
+.vscode
 .project
 .classpath
 .c9/
